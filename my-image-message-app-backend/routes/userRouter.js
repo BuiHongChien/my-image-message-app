@@ -6,9 +6,9 @@ const auth = require("../middleware/auth");
 
 router.post("/register", async (req, res) => {
   try {
-    let { username, password, passwordCheck, message } = req.body;
+    let { username, password, passwordCheck, message, image } = req.body;
 
-    if (!message || !username || !password || !passwordCheck) {
+    if (!username || !password || !passwordCheck) {
       return res.status(400).json({ msg: "Not all fields have been entered" });
     }
     if (password !== passwordCheck)
@@ -28,6 +28,7 @@ router.post("/register", async (req, res) => {
     const newUser = new User({
       username,
       password: passwordHash,
+      image
     });
 
     const saveUser = await newUser.save();
@@ -91,11 +92,12 @@ router.post("/tokenIsValid", async (req, res) => {
   }
 });
 
-router.get("/", auth, async (req, res) => {
+router.get("/show", auth, async (req, res) => {
   const user = await User.findById(req.user);
   res.json({
     id: user._id,
   });
+  res.send(user.image);
 });
 
 module.exports = router;

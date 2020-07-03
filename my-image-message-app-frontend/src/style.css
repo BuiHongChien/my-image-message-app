@@ -42,6 +42,14 @@
   padding-top: 3rem;
 }
 
+.show{
+  background-color: rgb(55, 115, 172);
+  width: 700px;
+  height: 500px;
+  padding-left: 3rem;
+  padding-top: 3rem;
+}
+
 .page {
   margin: 0;
   position: absolute;

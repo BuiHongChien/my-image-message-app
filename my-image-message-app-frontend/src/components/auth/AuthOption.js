@@ -16,6 +16,7 @@ export default function AuthOption() {
       user: undefined,
     });
     localStorage.setItem("auth-token", "");
+    history.push("/");
   };
 
   return (

@@ -1,9 +1,14 @@
 import React, { useState, useContext } from "react";
 import Axios from "axios";
+import ReactDOM from 'react-dom';
 import { MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import UserContext from "../../context/UserContext";
 import { useHistory } from "react-router-dom";
 import ErrorNotice from "../misc/ErrorNotice";
+
+const { createCanvas, loadImage } = require('canvas')
+const canvas = createCanvas(300, 300)
+const ctx = canvas.getContext('2d')
 
 export default function Register() {
   const [username, setUsername] = useState();
@@ -11,15 +16,23 @@ export default function Register() {
   const [passwordCheck, setPasswordCheck] = useState();
   const [message, setMessage] = useState();
   const [error, setError] = useState();
+  const [image, setImage]=useState();
 
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
+ 
+  const convert=e=>{
+    setMessage(e.target.value)
+    ctx.fillText(message, 100,100,600);
+    setImage(canvas.toDataURL());
+  }
 
   const submit = async (e) => {
     e.preventDefault();
-
+    if(message) console.log(false);
+    if(image) console.log(0);
     try {
-      const newUser = { username, password, passwordCheck, message };
+      const newUser = { username, password, passwordCheck, message, image };
       await Axios.post("http://localhost:5000/users/register", newUser);
       const loginRes = await Axios.post("http://localhost:5000/users/login", {
         username,
@@ -30,7 +43,7 @@ export default function Register() {
         user: loginRes.data.user,
       });
       localStorage.setItem("auth-token", loginRes.data.token);
-      history.push("/");
+      history.push("/show");
     } catch (err) {
       err.response.data.msg && setError(err.response.data.msg);
     }
@@ -80,10 +93,11 @@ export default function Register() {
                 type="text"
                 id="register-message"
                 className="textarea"
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={convert}
                 placeholder="Enter your message here..."
                 rows="7"
               />
+              
               {error && (
                 <ErrorNotice
                   message={error}
@@ -91,10 +105,11 @@ export default function Register() {
                 />
               )}
               <div className="text-center mt-4 white-text">
-                <MDBBtn color="rgb(16, 69, 150)" type="submit" value="register">
+              <MDBBtn color="rgb(16, 69, 150)" type="submit" value="register" >
                   Submit
                 </MDBBtn>
               </div>
+              {/* <canvas id="canvas" width="300" height="300"></canvas> */}
             </form>
           </MDBCol>
         </MDBRow>
