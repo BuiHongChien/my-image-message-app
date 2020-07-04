@@ -4,10 +4,10 @@ import Header from "./components/layout/Header";
 import Home from "./components/pages/Home";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import Show from "./components/auth/Show";
 import Axios from "axios";
-import "./style.css";
 import UserContext from "./context/UserContext";
+
+import "./style.css";
 
 export default function App() {
   const [userData, setUserData] = useState({
@@ -28,7 +28,8 @@ export default function App() {
         { headers: { "x-auth-token": token } }
       );
       if (tokenRes.data) {
-        const userRes = await Axios.get("http://localhost:5000/users/show", {
+        console.log(token.data);
+        const userRes = await Axios.get("http://localhost:5000/users/", {
           headers: { "x-auth-token": token },
         });
         setUserData({
@@ -48,7 +49,6 @@ export default function App() {
           <Header />
           <Switch>
             <Route exact path="/" component={Home}></Route>
-            <Route path="/show" component={Show}></Route>
             <Route path="/login" component={Login}></Route>
             <Route path="/register" component={Register}></Route>
           </Switch>

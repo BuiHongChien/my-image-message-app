@@ -1,14 +1,18 @@
 import React, { useState, useContext } from "react";
 import Axios from "axios";
-import ReactDOM from 'react-dom';
 import { MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import UserContext from "../../context/UserContext";
 import { useHistory } from "react-router-dom";
 import ErrorNotice from "../misc/ErrorNotice";
 
-const { createCanvas, loadImage } = require('canvas')
-const canvas = createCanvas(300, 300)
-const ctx = canvas.getContext('2d')
+const { createCanvas, loadImage } = require('canvas');
+const canvas = createCanvas(500, 500);
+const ctx = canvas.getContext('2d');
+ctx.font = "12px Arial";
+ctx.fillStyle = "#FFFFFF";
+
+
+
 
 export default function Register() {
   const [username, setUsername] = useState();
@@ -23,16 +27,17 @@ export default function Register() {
  
   const convert=e=>{
     setMessage(e.target.value)
-    ctx.fillText(message, 100,100,600);
+    ctx.fillText(message, 70,70);
+    //ctx.fill();
     setImage(canvas.toDataURL());
   }
 
   const submit = async (e) => {
     e.preventDefault();
     if(message) console.log(false);
-    if(image) console.log(0);
+    if(image) console.log(image);
     try {
-      const newUser = { username, password, passwordCheck, message, image };
+      const newUser = { username, password, passwordCheck, message , image};
       await Axios.post("http://localhost:5000/users/register", newUser);
       const loginRes = await Axios.post("http://localhost:5000/users/login", {
         username,
@@ -43,7 +48,7 @@ export default function Register() {
         user: loginRes.data.user,
       });
       localStorage.setItem("auth-token", loginRes.data.token);
-      history.push("/show");
+      history.push("/");
     } catch (err) {
       err.response.data.msg && setError(err.response.data.msg);
     }
@@ -109,7 +114,6 @@ export default function Register() {
                   Submit
                 </MDBBtn>
               </div>
-              {/* <canvas id="canvas" width="300" height="300"></canvas> */}
             </form>
           </MDBCol>
         </MDBRow>

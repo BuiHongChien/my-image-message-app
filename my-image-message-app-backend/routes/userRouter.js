@@ -8,7 +8,7 @@ router.post("/register", async (req, res) => {
   try {
     let { username, password, passwordCheck, message, image } = req.body;
 
-    if (!username || !password || !passwordCheck) {
+    if (!message || !username || !password || !passwordCheck) {
       return res.status(400).json({ msg: "Not all fields have been entered" });
     }
     if (password !== passwordCheck)
@@ -28,7 +28,8 @@ router.post("/register", async (req, res) => {
     const newUser = new User({
       username,
       password: passwordHash,
-      image
+      message,
+      image,
     });
 
     const saveUser = await newUser.save();
@@ -43,13 +44,13 @@ router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password)
-      return res.status(400).json({ msg: "Not all fields have been entered" });
+      return res.status(400).json({ msg: "Not all fields have been entered." });
 
     const user = await User.findOne({ username: username });
     if (!user)
       return res
         .status(400)
-        .json({ msg: "No account with this username has been register" });
+        .json({ msg: "No account with this username has been registered." });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
@@ -59,6 +60,8 @@ router.post("/login", async (req, res) => {
       token,
       user: {
         id: user._id,
+        image:user.image,
+        message: user.message,
       },
     });
   } catch (err) {
@@ -92,12 +95,14 @@ router.post("/tokenIsValid", async (req, res) => {
   }
 });
 
-router.get("/show", auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);
   res.json({
     id: user._id,
+    username: user.username,
+    image:user.image,
+    message:user.message,
   });
-  res.send(user.image);
 });
 
 module.exports = router;

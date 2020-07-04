@@ -8,7 +8,17 @@ export default function Home() {
     <div className="home">
       <div className="center">
         {userData.user ? (
-          <h1 className="welcome">Welcome to the Image Message app!</h1>
+          <>
+            <div className="page">
+              <h1>Hello {userData.user.username}</h1>
+              <div className="show">
+                <p className="h6 text-center mb-4 white-text">
+                  Here is your image message:{" "}
+                </p>
+                <img src={userData.user.image} alt="image" />
+              </div>
+            </div>
+          </>
         ) : (
           <>
             <h1 className="welcome">Welcome to the Image Message app!</h1>
