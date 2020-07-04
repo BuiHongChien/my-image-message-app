@@ -8,8 +8,10 @@ import ErrorNotice from "../misc/ErrorNotice";
 const { createCanvas, loadImage } = require('canvas');
 const canvas = createCanvas(500, 500);
 const ctx = canvas.getContext('2d');
-ctx.font = "12px Arial";
-ctx.fillStyle = "#FFFFFF";
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.font = "20px Arial";
+ctx.fillStyle = "rgb(55, 115, 172)";
 
 
 
@@ -25,10 +27,8 @@ export default function Register() {
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
  
-  const convert=e=>{
-    setMessage(e.target.value)
-    ctx.fillText(message, 70,70);
-    //ctx.fill();
+  const convert=()=>{
+    ctx.fillText(message, 70,70,400);
     setImage(canvas.toDataURL());
   }
 
@@ -98,7 +98,7 @@ export default function Register() {
                 type="text"
                 id="register-message"
                 className="textarea"
-                onChange={convert}
+                onChange={(e) => setMessage(e.target.value)}
                 placeholder="Enter your message here..."
                 rows="7"
               />
@@ -110,7 +110,7 @@ export default function Register() {
                 />
               )}
               <div className="text-center mt-4 white-text">
-              <MDBBtn color="rgb(16, 69, 150)" type="submit" value="register" >
+              <MDBBtn color="rgb(16, 69, 150)" type="submit" value="register" onClick={convert}>
                   Submit
                 </MDBBtn>
               </div>
