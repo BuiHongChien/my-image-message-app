@@ -23,6 +23,7 @@
 ### Basic working of this app:
 1. When user registers a new account with a message. The message will be converted to an image and displayed when user login.
 2. When user enters email and password and when both of them are correct in login form we return an access token.
+<<<<<<< HEAD
 3. This access token is stored in [localstorage](https://www.robinwieruch.de/local-storage-react) of the browser.
 4. If access token is present - > we verify that access token and redirect user to the home with image page.
 5. If access token is not present - > we keep user on the same page.
@@ -30,6 +31,15 @@
 > **[JWT](https://jwt.io/introduction/):** *Json Web Token it is a libray to generate random token it has 2 function jwt.sign() to create token and jwt.verify() to verify*
 
 > **[Bcrypt](https://medium.com/front-end-weekly/how-to-create-a-simple-authorization-login-using-bcrypt-react-and-ajax-d71ed919f5cb):** *Library to hash passwords, I've used two functions in this project bcrypt.hash() to hash password and bcrypt.compare to compare string with hashed password.*
+=======
+3. This access token is stored in localstorage of the browser.
+4. If access token is present - > we verify that access token and redirect user to the home with image page.
+5. If access token is not present - > we keep user on the same page.
+
+> **JWT:** *Json Web Token it is a libray to generate random token it has 2 function jwt.sign() to create token and jwt.verify() to verify*
+
+> **Bcrypt:** *Library to hash passwords, I've used two functions in this project bcrypt.hash() to hash password and bcrypt.compare to compare string with hashed password.*
+>>>>>>> 89deca0a7d29d45e2d659be10a50d861c20e99a3
 
 ### How to run:
 - Backend:
@@ -47,6 +57,9 @@
 
 ### Demo-GIF:
 ![alt text](https://github.com/BuiHongChien/my-image-message-app/blob/develop/message-app-demo.gif)
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 89deca0a7d29d45e2d659be10a50d861c20e99a3
