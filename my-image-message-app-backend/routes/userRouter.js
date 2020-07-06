@@ -6,34 +6,45 @@ const auth = require("../middleware/auth");
 
 router.post("/register", async (req, res) => {
   try {
-    let { username, password, passwordCheck, message, image } = req.body;
-
-    if (!message || !username || !password || !passwordCheck) {
-      return res.status(400).json({ msg: "Not all fields have been entered" });
-    }
-    if (password !== passwordCheck)
-      return res
-        .status(400)
-        .json({ msg: "Enter the same password twice for verification." });
-
-    const existingUser = await User.findOne({ username: username });
-    if (existingUser)
-      return res
-        .status(400)
-        .json({ msg: "An account with this username already exists." });
-
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt);
-
-    const newUser = new User({
+    let {
       username,
-      password: passwordHash,
+      password,
+      passwordCheck,
       message,
       image,
-    });
+      lastLoggedIn,
+    } = req.body;
 
-    const saveUser = await newUser.save();
-    res.json(saveUser);
+    if (!username || !password || !passwordCheck || !message) {
+      return res.status(400).json({ msg: "Not all fields have been entered" });
+    } else {
+      if (password !== passwordCheck) {
+        return res
+          .status(400)
+          .json({ msg: "Enter the same password twice for verification." });
+      } else {
+        const existingUser = await User.findOne({ username: username });
+        if (existingUser) {
+          return res
+            .status(400)
+            .json({ msg: "An account with this username already exists." });
+        } else {
+          const salt = await bcrypt.genSalt();
+          const passwordHash = await bcrypt.hash(password, salt);
+
+          const newUser = new User({
+            username,
+            password: passwordHash,
+            message,
+            image,
+            lastLoggedIn
+          });
+
+          const saveUser = await newUser.save();
+          res.json(saveUser);
+        }
+      }
+    }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -60,8 +71,9 @@ router.post("/login", async (req, res) => {
       token,
       user: {
         id: user._id,
-        image:user.image,
+        image: user.image,
         message: user.message,
+        lastLoggedIn:user.lastLoggedIn
       },
     });
   } catch (err) {
@@ -100,8 +112,8 @@ router.get("/", auth, async (req, res) => {
   res.json({
     id: user._id,
     username: user.username,
-    image:user.image,
-    message:user.message,
+    image: user.image,
+    lastLoggedIn:user.lastLoggedIn
   });
 });
 

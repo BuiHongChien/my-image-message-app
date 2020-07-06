@@ -5,7 +5,6 @@ import Home from "./components/pages/Home";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Axios from "axios";
-import { withCookies } from 'react-cookie';
 import UserContext from "./context/UserContext";
 
 import "./style.css";

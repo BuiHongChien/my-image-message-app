@@ -29,7 +29,11 @@ export default function Login() {
       localStorage.setItem("auth-token", loginRes.data.token);
       //console.log(loginRes.data.user.image)
       history.push("/");
-
+      loginRes.data.user.lastLoggedIn = new Date().toLocaleString();
+      setUserData({
+        token: loginRes.data.token,
+        user: loginRes.data.user,
+      });
     } catch (err) {
       err.response.data.msg && setError(err.response.data.msg);
     }

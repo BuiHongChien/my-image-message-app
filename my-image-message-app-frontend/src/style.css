@@ -8,19 +8,27 @@
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   background: url(https://martechtoday.com/wp-content/uploads/2018/08/emails-fly-II_ml97hw.png)
     no-repeat center center fixed;
   background-size: cover;
 }
 
-.center {
+.center0 {
   font-family: "Lucida Console", Courier, monospace;
   padding: 2rem;
   text-align: center;
   color: rgb(255, 255, 255);
 }
+
+.center1 {
+  font-family: "Lucida Console", Courier, monospace;
+  padding: 2rem;
+  text-align: center;
+  color:  rgb(55, 115, 172);
+}
+
 
 .welcome {
   font-size: 60px;

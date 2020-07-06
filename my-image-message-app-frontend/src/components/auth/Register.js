@@ -5,39 +5,47 @@ import UserContext from "../../context/UserContext";
 import { useHistory } from "react-router-dom";
 import ErrorNotice from "../misc/ErrorNotice";
 
-const { createCanvas, loadImage } = require('canvas');
-const canvas = createCanvas(500, 500);
-const ctx = canvas.getContext('2d');
-ctx.fillStyle = "white";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-ctx.font = "20px Arial";
-ctx.fillStyle = "rgb(55, 115, 172)";
-
-
-
-
 export default function Register() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [passwordCheck, setPasswordCheck] = useState();
   const [message, setMessage] = useState();
   const [error, setError] = useState();
-  const [image, setImage]=useState();
+  const [image, setImage] = useState();
+  const [lastLoggedIn, setLastLoggedIn] = useState();
 
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
- 
-  const convert=()=>{
-    ctx.fillText(message, 70,70,400);
-    setImage(canvas.toDataURL());
-  }
+
+  const convert = () => {
+    if (message) {
+      const { createCanvas, loadImage } = require("canvas");
+      const canvas = createCanvas(500, 500);
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.font = "20px Arial";
+      ctx.fillStyle = "rgb(55, 115, 172)";
+      ctx.fillText(message, 70, 70, 400);
+
+      setImage(canvas.toDataURL());
+    }
+    setLastLoggedIn(new Date().toLocaleString());
+  };
 
   const submit = async (e) => {
     e.preventDefault();
-    if(message) console.log(false);
-    if(image) console.log(image);
+    //if(message) console.log(false);
+    //if(image) console.log(image);
     try {
-      const newUser = { username, password, passwordCheck, message , image};
+      const newUser = {
+        username,
+        password,
+        passwordCheck,
+        message,
+        image,
+        lastLoggedIn,
+      };
       await Axios.post("http://localhost:5000/users/register", newUser);
       const loginRes = await Axios.post("http://localhost:5000/users/login", {
         username,
@@ -102,18 +110,28 @@ export default function Register() {
                 placeholder="Enter your message here..."
                 rows="7"
               />
-              
-              {error && (
-                <ErrorNotice
-                  message={error}
-                  clearError={() => setError(undefined)}
-                />
+
+              {error ? (
+                <>
+                  <ErrorNotice
+                    message={error}
+                    clearError={() => setError(undefined)}
+                  />
+                </>
+              ) : (
+                <>
+                  <div className="text-center mt-4 white-text">
+                    <MDBBtn
+                      color="rgb(16, 69, 150)"
+                      type="submit"
+                      value="register"
+                      onClick={convert}
+                    >
+                      Submit
+                    </MDBBtn>
+                  </div>
+                </>
               )}
-              <div className="text-center mt-4 white-text">
-              <MDBBtn color="rgb(16, 69, 150)" type="submit" value="register" onClick={convert}>
-                  Submit
-                </MDBBtn>
-              </div>
             </form>
           </MDBCol>
         </MDBRow>
