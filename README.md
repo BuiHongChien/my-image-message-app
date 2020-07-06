@@ -8,7 +8,7 @@
 
 > **[ExpressJS](https://expressjs.com/):** *A framework layered on top of NodeJS.*
 
-> **ReactJS:** *A library created by Facebook. It is used to build UI components that create the user interface of the single page web application.*
+> **[ReactJS](https://reactjs.org/):** *A library created by Facebook. It is used to build UI components that create the user interface of the single page web application.*
 
 > **[NodeJS](https://reactjs.org/):** *The JavaScript runtime environment. It is used to run JavaScript on a machine rather than in a browser.*
 
@@ -17,8 +17,14 @@
 
 
 ### This project includes:
-- User Login
 - User Register
+
+![alt text](https://github.com/BuiHongChien/my-image-message-app/blob/develop/demo-register.gif)
+
+- User Login
+
+![alt text](https://github.com/BuiHongChien/my-image-message-app/blob/develop/demo-login.gif)
+
 - Convert text to image
 
 ### Basic working of this app:
@@ -48,7 +54,4 @@
     `cd my-image-message-app`
 
     `npm start`
-
-### Demo-GIF:
-![alt text](https://github.com/BuiHongChien/my-image-message-app/blob/develop/message-app-demo.gif)
 
