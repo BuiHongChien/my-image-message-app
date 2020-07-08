@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   message: { type: String, required: true },
   image: { type: String },
+  expiryDate:{type:Date},
   lastLoggedIn: { type: String },
 });
 

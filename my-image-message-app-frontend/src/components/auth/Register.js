@@ -13,6 +13,7 @@ export default function Register() {
   const [error, setError] = useState();
   const [image, setImage] = useState();
   const [lastLoggedIn, setLastLoggedIn] = useState();
+  const [expiryDate, setExpiryDate] = useState();
 
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
@@ -27,15 +28,20 @@ export default function Register() {
       ctx.font = "20px Arial";
       ctx.fillStyle = "rgb(55, 115, 172)";
       ctx.fillText(message, 70, 70, 400);
-
       setImage(canvas.toDataURL());
     }
+
     setLastLoggedIn(new Date().toLocaleString());
+
+    var date = new Date().getTime() + 86400000;
+    setExpiryDate(new Date(date));
   };
 
   const submit = async (e) => {
     e.preventDefault();
-    //if(message) console.log(false);
+
+    //if(expiryDate) console.log(false);
+    console.log(expiryDate);
     //if(image) console.log(image);
     try {
       const newUser = {
@@ -44,6 +50,7 @@ export default function Register() {
         passwordCheck,
         message,
         image,
+        expiryDate,
         lastLoggedIn,
       };
       await Axios.post("http://localhost:5000/users/register", newUser);
@@ -55,8 +62,10 @@ export default function Register() {
         token: loginRes.data.token,
         user: loginRes.data.user,
       });
+  
       localStorage.setItem("auth-token", loginRes.data.token);
       history.push("/");
+
     } catch (err) {
       err.response.data.msg && setError(err.response.data.msg);
     }

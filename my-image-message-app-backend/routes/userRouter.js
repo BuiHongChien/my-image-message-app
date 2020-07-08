@@ -12,6 +12,7 @@ router.post("/register", async (req, res) => {
       passwordCheck,
       message,
       image,
+      expiryDate,
       lastLoggedIn,
     } = req.body;
 
@@ -37,6 +38,7 @@ router.post("/register", async (req, res) => {
             password: passwordHash,
             message,
             image,
+            expiryDate,
             lastLoggedIn
           });
 
@@ -73,6 +75,7 @@ router.post("/login", async (req, res) => {
         id: user._id,
         image: user.image,
         message: user.message,
+        expiryDate:user.expiryDate,
         lastLoggedIn:user.lastLoggedIn
       },
     });
@@ -113,6 +116,7 @@ router.get("/", auth, async (req, res) => {
     id: user._id,
     username: user.username,
     image: user.image,
+    expiryDate:user.expiryDate,
     lastLoggedIn:user.lastLoggedIn
   });
 });
