@@ -19,11 +19,11 @@
 ### This project includes:
 - User Register
 
-![alt text](https://github.com/BuiHongChien/my-image-message-app/blob/develop/demo-register.gif)
+![alt text](https://github.com/BuiHongChien/my-image-message-app/blob/master/demo-register.gif)
 
 - User Login
 
-![alt text](https://github.com/BuiHongChien/my-image-message-app/blob/develop/demo-login.gif)
+![alt text](https://github.com/BuiHongChien/my-image-message-app/blob/master/demo-login.gif)
 
 - Convert text to image
 
